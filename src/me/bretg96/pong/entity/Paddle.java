@@ -7,4 +7,9 @@ public class Paddle extends Entity
     {
         this.color = color;
     }
+
+    @Override
+    public void render(int[] pixels) {
+
+    }
 }
