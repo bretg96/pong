@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.Random;
 
 
 public class Pong extends Canvas implements Runnable
@@ -64,12 +65,14 @@ public class Pong extends Canvas implements Runnable
 
 		}
 	}
+
 	private int vel = (HEIGHT/2)-(100/2);
 	private int vel2 = (HEIGHT/2)-(100/2);
 	private int xBallVel = (WIDTH-25)/2;
 	private int yBallVel = (HEIGHT-25)/2;
-	private int xBallDir = 1;
-	private int yBallDir = 1;
+	private int xBallDir = -1;
+	private int yBallDir = -1;
+	private int diff = 1;
 
 	private void render()
 	{
@@ -83,7 +86,7 @@ public class Pong extends Canvas implements Runnable
 
 		xBallVel+=xBallDir;
 		yBallVel+=yBallDir;
-		if (yBallVel > HEIGHT-100)
+		if (yBallVel > HEIGHT-50)
 		{
 			yBallDir*=-1;
 		}
@@ -104,36 +107,38 @@ public class Pong extends Canvas implements Runnable
 
 		if ((yBallVel<vel+100 && yBallVel> vel-50) && (xBallVel == 35)) {
 			xBallDir *=-1;
-
+			diff++;
 		}
 		if ((yBallVel<vel2+100 && yBallVel> vel2-50) && (xBallVel == WIDTH-35)) {
 			xBallDir *=-1;
-
+			diff++;
 
 		}
+
 		if (xBallVel<10 || xBallVel>WIDTH-25) {
 			Pong.inPlay = false;
 		}
 
 
 
-			if (this.keyboardlistener.isPressed(KeyEvent.VK_W)) //move paddle up
-			{
-				vel -= 2;
-				if (vel < 50) {
-					vel = HEIGHT - 100;
-				}
 
-
+		if (this.keyboardlistener.isPressed(KeyEvent.VK_W)) //move paddle up
+		{
+			vel -= 2;
+			if (vel < 50) {
+				vel = HEIGHT - 100;
 			}
-			if (this.keyboardlistener.isPressed(KeyEvent.VK_S)) //move paddle down
-			{
-				vel += 2;
-				if (vel > HEIGHT - 100) {
-					vel = 100;
-				}
 
+
+		}
+		if (this.keyboardlistener.isPressed(KeyEvent.VK_S)) //move paddle down
+		{
+			vel += 2;
+			if (vel > HEIGHT - 100) {
+				vel = 100;
 			}
+
+		}
 			if (this.keyboardlistener.isPressed(KeyEvent.VK_UP)) //move paddle up
 			{
 				vel2 -= 2;
